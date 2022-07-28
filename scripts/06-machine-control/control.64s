@@ -1,0 +1,102 @@
+	.file	"control.c"
+	.text
+	.globl	gt
+	.type	gt, @function
+gt:
+.LFB0:
+	.cfi_startproc
+	endbr64
+	cmpq	%rsi, %rdi
+	setg	%al
+	movzbl	%al, %eax
+	ret
+	.cfi_endproc
+.LFE0:
+	.size	gt, .-gt
+	.globl	zero
+	.type	zero, @function
+zero:
+.LFB1:
+	.cfi_startproc
+	endbr64
+	testq	%rdi, %rdi
+	sete	%al
+	movzbl	%al, %eax
+	ret
+	.cfi_endproc
+.LFE1:
+	.size	zero, .-zero
+	.globl	absdiff
+	.type	absdiff, @function
+absdiff:
+.LFB2:
+	.cfi_startproc
+	endbr64
+	movq	%rdi, %rax
+	cmpq	%rsi, %rdi
+	jle	.L4
+	subq	%rsi, %rax
+	ret
+.L4:
+	subq	%rdi, %rsi
+	movq	%rsi, %rax
+	ret
+	.cfi_endproc
+.LFE2:
+	.size	absdiff, .-absdiff
+	.globl	absdiff_j
+	.type	absdiff_j, @function
+absdiff_j:
+.LFB3:
+	.cfi_startproc
+	endbr64
+	movq	%rsi, %rax
+	cmpq	%rsi, %rdi
+	jg	.L7
+	subq	%rdi, %rax
+	ret
+.L7:
+	subq	%rsi, %rdi
+	movq	%rdi, %rax
+.L8:
+	endbr64
+	ret
+	.cfi_endproc
+.LFE3:
+	.size	absdiff_j, .-absdiff_j
+	.globl	absdiff_cm
+	.type	absdiff_cm, @function
+absdiff_cm:
+.LFB4:
+	.cfi_startproc
+	endbr64
+	movq	%rdi, %rdx
+	subq	%rsi, %rdx
+	movq	%rsi, %rax
+	subq	%rdi, %rax
+	cmpq	%rsi, %rdi
+	jle	.L9
+	movq	%rdx, %rax
+.L9:
+	ret
+	.cfi_endproc
+.LFE4:
+	.size	absdiff_cm, .-absdiff_cm
+	.ident	"GCC: (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0"
+	.section	.note.GNU-stack,"",@progbits
+	.section	.note.gnu.property,"a"
+	.align 8
+	.long	 1f - 0f
+	.long	 4f - 1f
+	.long	 5
+0:
+	.string	 "GNU"
+1:
+	.align 8
+	.long	 0xc0000002
+	.long	 3f - 2f
+2:
+	.long	 0x3
+3:
+	.align 8
+4:
